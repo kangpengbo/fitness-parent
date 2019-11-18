@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="fitness-eureka-10001" />
+        <module name="fitness-gateway-10010" />
+        <module name="fitness-item-9000" />
+        <module name="fitness-model" />
+        <module name="fitness-utils" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="fitness-eureka-10001" options="-parameters" />
+      <module name="fitness-gateway-10010" options="-parameters" />
+      <module name="fitness-item-9000" options="-parameters" />
+      <module name="fitness-model" options="-parameters" />
+      <module name="fitness-utils" options="-parameters" />
+    </option>
+  </component>
+</project>
