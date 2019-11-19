@@ -22,7 +22,7 @@ public class UploadController {
 
     @Autowired
     UploadService uploadService ;
-
+        //下载文件
     @PostMapping("/uploadImg")
     public String upload(@RequestParam("file") MultipartFile file) {
         System.out.println(file);
