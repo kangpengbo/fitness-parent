@@ -25,4 +25,14 @@ public class UserServiceImpl implements IUserService {
     public List<User> findAll() {
         return userMapper.selectAll();
     }
+
+    @Override
+    public User findOneByAccount(String account) {
+        return userMapper.selectOneByAccount(account);
+    }
+
+    @Override
+    public int addUser(User user) {
+        return userMapper.insert(user);
+    }
 }

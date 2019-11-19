@@ -14,4 +14,8 @@ import java.util.List;
  */
 public interface IUserService {
     List<User> findAll();
+
+    User findOneByAccount(String account);
+
+    int addUser(User user);
 }
