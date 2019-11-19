@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,9 +22,10 @@ import java.util.List;
 public class UserServiceImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
+
     @Override
-    public List<User> findAll() {
-        return userMapper.selectAll();
+    public List<User> findAll(String message, int info) {
+        return userMapper.selectAll(message, info);
     }
 
     @Override
@@ -33,6 +35,22 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public int addUser(User user) {
+        user.setCreate_time(new Date());
         return userMapper.insert(user);
+    }
+
+    @Override
+    public int defriend(int id) {
+        return userMapper.defriend(id);
+    }
+
+    @Override
+    public int restore(int id) {
+        return userMapper.restore(id);
+    }
+
+    @Override
+    public int update(User user) {
+        return userMapper.update(user);
     }
 }
