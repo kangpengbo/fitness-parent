@@ -13,9 +13,17 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface IUserService {
-    List<User> findAll();
+    List<User> findAll(String message,int info);
 
     User findOneByAccount(String account);
 
     int addUser(User user);
+
+    /*拉黑*/
+    int defriend(int id);
+
+    /*还原*/
+    int restore(int id);
+
+    int update(User user);
 }
