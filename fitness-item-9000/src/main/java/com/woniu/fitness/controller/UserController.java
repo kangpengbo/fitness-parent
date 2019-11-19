@@ -50,9 +50,10 @@ public class UserController {
 
     @RequestMapping("/register")
     public int register(@RequestBody UserCode userCode, HttpSession session) {
+        System.out.println(userCode);
         //验证码是否正确
         String sendCode = (String) session.getAttribute("mailInfo");
-        if (!sendCode.equals(userCode.getCode())) {
+        if (!userCode.getCode().equals(sendCode)) {
             return 0;
         }
         //账户是否存在
@@ -79,15 +80,17 @@ public class UserController {
         }
     }
 
+    /*用户信息修改*/
     @RequestMapping("/update")
     public ResponseResult update(@RequestBody User user) {
-        String password = MD5Maker.stringToMd5StringWithSalt(user.getPassword(), user.getAccount());
-        user.setPassword(password);
-        User user1 = userService.findOneByAccount(user.getAccount());
-        if (user1.getPassword().equals(password)) {
-            return new ResponseResult("100", "短期内不能使用相同的密码，修改失败!");
-        }
         userService.update(user);
+        return new ResponseResult("200", "修改成功!");
+    }
+
+    /*密码修改*/
+    @RequestMapping("/updatePassword")
+    public ResponseResult updatePassword(String password) {
+
         return new ResponseResult("200", "修改成功!");
     }
 }
