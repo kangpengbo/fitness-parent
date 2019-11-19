@@ -14,7 +14,7 @@ public interface UserMapper {
     User selectOneByAccount(String account);
 
     //注册添加用户
-    @Insert("insert into t_user (account,password,nickname,sex,birthday,telephone,email,creat_time) values (#{account},#{password},#{nickname},#{sex},#{birthday},#{telephone},#{email},#{creat_time})")
+    @Insert("insert into t_user (account,password,nickname,sex,birthday,telephone,email,create_time) values (#{account},#{password},#{nickname},#{sex},#{birthday},#{telephone},#{email},#{create_time})")
     int insert(User user);
 
     /*拉黑*/
