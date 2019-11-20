@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-@Mapper
 public interface UserMapper {
     /*条件查询用户信息*/
     List<User> selectAll(@Param("message") String message, @Param("info") int info);
