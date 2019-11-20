@@ -50,12 +50,11 @@ public class UserController {
 
     @RequestMapping("/register")
     public int register(@RequestBody UserCode userCode, HttpSession session) {
-        System.out.println(userCode);
         //验证码是否正确
         String sendCode = (String) session.getAttribute("mailInfo");
-        if (!userCode.getCode().equals(sendCode)) {
+        /*if (!userCode.getCode().equals(sendCode)) {
             return 0;
-        }
+        }*/
         //账户是否存在
         User u = userService.findOneByAccount(userCode.getUser().getAccount());
         if (u != null) {
@@ -89,8 +88,8 @@ public class UserController {
 
     /*密码修改*/
     @RequestMapping("/updatePassword")
-    public ResponseResult updatePassword(String password) {
-
+    public ResponseResult updatePassword(User user) {
+        userService.updatePassword(user);
         return new ResponseResult("200", "修改成功!");
     }
 }

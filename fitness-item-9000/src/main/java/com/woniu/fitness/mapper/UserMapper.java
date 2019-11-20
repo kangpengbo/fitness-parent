@@ -14,7 +14,7 @@ public interface UserMapper {
     User selectOneByAccount(String account);
 
     //注册添加用户
-    @Insert("insert into t_user (account,password,nickname,sex,birthday,telephone,email,creat_time) values (#{account},#{password},#{nickname},#{sex},#{birthday},#{telephone},#{email},#{creat_time})")
+    @Insert("insert into t_user (account,password,nickname,sex,birthday,telephone,email,create_time) values (#{account},#{password},#{nickname},#{sex},#{birthday},#{telephone},#{email},#{create_time})")
     int insert(User user);
 
     /*拉黑*/
@@ -26,10 +26,10 @@ public interface UserMapper {
     int restore(int id);
 
     /*修改用户*/
-    @Update("update t_user set nickname=#{nickname},telephone=#{telephone},email=#{email},head_image=#{head_image},height=#{height},weight=#{weight},city=#{city},introduction=#{introduction}")
+    @Update("update t_user set nickname=#{nickname},telephone=#{telephone},email=#{email},head_image=#{head_image},height=#{height},weight=#{weight},city=#{city},introduction=#{introduction} where user_id=#{user_id}")
     int update(User user);
 
     /*修改密码*/
-    @Update("update t_user set password=#{value}")
-    int updatePassword(String password);
+    @Update("update t_user set password=#{password} where user_id=#{user_id}")
+    int updatePassword(User user);
 }
