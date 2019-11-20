@@ -53,4 +53,9 @@ public class UserServiceImpl implements IUserService {
     public int update(User user) {
         return userMapper.update(user);
     }
+
+    @Override
+    public int updatePassword(User user) {
+        return userMapper.updatePassword(user);
+    }
 }

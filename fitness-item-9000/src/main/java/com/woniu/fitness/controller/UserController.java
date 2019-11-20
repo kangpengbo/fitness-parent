@@ -42,25 +42,19 @@ public class UserController {
         if (code != null) {
             session.removeAttribute("emailInfo");
         }
-
-        System.out.println(session.getId()  +"--------------------------------------------------");
         String random = (int) (Math.random() * 100000) + "";
-        session.setAttribute("emailInfo", random);
-        System.out.println(session.getAttribute("emailInfo"));
+        session.setAttribute("mailInfo", random);
         EmailUtil.sendEmail(email, "您好，您的验证码为:" + random);
         return "邮件已经发送成功!请填写验证码!";
     }
 
     @RequestMapping("/register")
     public int register(@RequestBody UserCode userCode, HttpSession session) {
-        System.out.println(session.getId()+"=========================================================");
         //验证码是否正确
-        System.out.println(userCode);
-        String sendCode = (String) session.getAttribute("emailInfo");
-        System.out.println(sendCode);
-//        if (!userCode.getCode().equals(sendCode)) {
-//            return 0;
-//        }
+        String sendCode = (String) session.getAttribute("mailInfo");
+        /*if (!userCode.getCode().equals(sendCode)) {
+            return 0;
+        }*/
         //账户是否存在
         User u = userService.findOneByAccount(userCode.getUser().getAccount());
         if (u != null) {
@@ -94,8 +88,8 @@ public class UserController {
 
     /*密码修改*/
     @RequestMapping("/updatePassword")
-    public ResponseResult updatePassword(String password) {
-
+    public ResponseResult updatePassword(User user) {
+        userService.updatePassword(user);
         return new ResponseResult("200", "修改成功!");
     }
 }

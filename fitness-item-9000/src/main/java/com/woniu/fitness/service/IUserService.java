@@ -13,7 +13,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface IUserService {
-    List<User> findAll(String message,int info);
+    List<User> findAll(String message, int info);
 
     User findOneByAccount(String account);
 
@@ -26,4 +26,6 @@ public interface IUserService {
     int restore(int id);
 
     int update(User user);
+
+    int updatePassword(User user);
 }
