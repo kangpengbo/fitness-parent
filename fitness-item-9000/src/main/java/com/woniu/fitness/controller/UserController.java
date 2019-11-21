@@ -8,10 +8,8 @@ import com.woniu.fitness.utils.MD5Maker;
 import com.woniu.fitness.wrapper.UserCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -92,5 +90,22 @@ public class UserController {
     public ResponseResult updatePassword(User user) {
         userService.updatePassword(user);
         return new ResponseResult("200", "修改成功!");
+    }
+
+    /*用户登录*/
+    @RequestMapping("/login")
+    public String login(@RequestBody User user) {
+        System.out.println(user);
+        User user1=userService.findByAccount(user.getAccount());
+        System.out.println(user);
+        if(user1==null){
+            return "0";
+        }else {
+            if(user1.getPassword().equals(user.getPassword())){
+                return "1";
+            }else {
+                return "0";
+            }
+        }
     }
 }
