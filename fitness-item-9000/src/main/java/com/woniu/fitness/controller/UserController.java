@@ -7,6 +7,7 @@ import com.woniu.fitness.utils.EmailUtil;
 import com.woniu.fitness.utils.MD5Maker;
 import com.woniu.fitness.wrapper.UserCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("list")
     public List<User> list(String message, int info) {
@@ -38,12 +41,8 @@ public class UserController {
 
     @RequestMapping("/sendEmail")
     public String sendEmail(HttpSession session, String email) {
-        String code = (String) session.getAttribute("emailInfo");
-        if (code != null) {
-            session.removeAttribute("emailInfo");
-        }
         String random = (int) (Math.random() * 100000) + "";
-        session.setAttribute("mailInfo", random);
+        redisTemplate.opsForValue().set(email, random);
         EmailUtil.sendEmail(email, "您好，您的验证码为:" + random);
         return "邮件已经发送成功!请填写验证码!";
     }
@@ -51,10 +50,12 @@ public class UserController {
     @RequestMapping("/register")
     public int register(@RequestBody UserCode userCode, HttpSession session) {
         //验证码是否正确
-        String sendCode = (String) session.getAttribute("mailInfo");
-        /*if (!userCode.getCode().equals(sendCode)) {
+        String sendCode = redisTemplate.opsForValue().get(userCode.getUser().getEmail());
+        //删除redis缓存
+        redisTemplate.delete(userCode.getUser().getEmail());
+        if (!userCode.getCode().equals(sendCode)) {
             return 0;
-        }*/
+        }
         //账户是否存在
         User u = userService.findOneByAccount(userCode.getUser().getAccount());
         if (u != null) {
