@@ -40,7 +40,7 @@ public class GlobalCorsConfig {
         configSource.registerCorsConfiguration("/**", config);
         //3.返回新的CorsFilter.
         return new CorsFilter(configSource);*/
-
+//需要开放全部跨域
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
          CorsConfiguration config = new CorsConfiguration();
          config.setAllowCredentials(true);
