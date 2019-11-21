@@ -5,7 +5,6 @@ import com.woniu.fitness.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +23,8 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     @Transient
-    public List<Comment> findAll() {
-        return commentMapper.selectAll();
+    public List<Comment> findAll(int dynamic_id) {
+        return commentMapper.selectAll(dynamic_id);
     }
 
     //删除评论
