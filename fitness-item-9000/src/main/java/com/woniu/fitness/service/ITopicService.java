@@ -8,13 +8,16 @@ import java.util.List;
 public interface ITopicService {
 
     //查询所有话题
-    List<Topic> findAll();
+    List<Topic> findAll(String message);
 
     //添加话题
     int add(Topic topic);
 
     //删除话题
     int remove(int id);
+
+    //复原话题
+    int recover(int id);
 
     //修改话题浏览数
     int updateView(int id);

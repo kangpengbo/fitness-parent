@@ -13,9 +13,15 @@
             and state = ${info}
         </if>
     </sql>-->
+    <sql id="sele">
+        <if test="message!=null and message.toString().trim()!=''">
+            and topic_title LIKE '%${message}%'
+        </if>
+    </sql>
+
     <select id="selectAll" resultType="Topic">
         select * from t_topic where 1=1
-        <!--<include refid="sele1"></include>
-        <include refid="sele2"></include>-->
+        <include refid="sele"></include>
+        ORDER BY create_time DESC
     </select>
 </mapper>

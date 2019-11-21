@@ -14,7 +14,7 @@
         </if>
     </sql>-->
     <select id="selectAll" resultType="comment">
-        select * from t_comment where 1=1
+        select * from t_comment where dynamic_id=#{id}
         <!--<include refid="sele1"></include>
         <include refid="sele2"></include>-->
     </select>

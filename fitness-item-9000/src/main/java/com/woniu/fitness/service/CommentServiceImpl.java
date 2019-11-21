@@ -24,8 +24,8 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     @Transient
-    public List<Comment> findAll() {
-        return commentMapper.selectAll();
+    public List<Comment> findAll(int dynamic_id) {
+        return commentMapper.selectAll(dynamic_id);
     }
 
     //删除评论

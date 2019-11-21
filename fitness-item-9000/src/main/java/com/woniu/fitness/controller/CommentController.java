@@ -21,8 +21,8 @@ public class CommentController {
 
     //查询所有评论
     @RequestMapping("/list")
-    public ResponseResult findAll() {
-        List<Comment> list = service.findAll();
+    public ResponseResult findAll(int dynamic_id) {
+        List<Comment> list = service.findAll(dynamic_id);
         Map<String, Object> map = new HashMap<>();
         map.put("commentlist", list);
         return new ResponseResult("200", "查询成功!").setMap(map);

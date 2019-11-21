@@ -20,8 +20,8 @@ public class TopicController {
 
     //展示所有话题
     @RequestMapping("/list")
-    public ResponseResult list() {
-        List<Topic> list = topicService.findAll();
+    public ResponseResult list(String message) {
+        List<Topic> list = topicService.findAll(message);
         Map<String, Object> map = new HashMap<>();
         map.put("topiclist", list);
         return new ResponseResult("200", "查询成功!").setMap(map);
@@ -50,9 +50,14 @@ public class TopicController {
 
     //删除话题，修改话题状态
     @RequestMapping("/remove")
-    public ResponseResult removeTopic(int id){
-        topicService.remove(id);
-        return new ResponseResult("200","修改成功!");
+    public ResponseResult removeTopic(int id,int state){
+        if (state==1){
+            topicService.remove(id);
+            return new ResponseResult("200","操作成功!");
+        }else {
+            topicService.recover(id);
+            return new ResponseResult("200","复原成功!");
+        }
     }
 
     //永久删除话题

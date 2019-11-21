@@ -10,6 +10,7 @@
         <module name="fitness-gateway-10010" />
         <module name="fitness-item-9000" />
         <module name="fitness-model" />
+        <module name="fitness-upload-8082" />
         <module name="fitness-utils" />
       </profile>
     </annotationProcessing>
@@ -20,6 +21,7 @@
       <module name="fitness-gateway-10010" options="-parameters" />
       <module name="fitness-item-9000" options="-parameters" />
       <module name="fitness-model" options="-parameters" />
+      <module name="fitness-upload-8082" options="-parameters" />
       <module name="fitness-utils" options="-parameters" />
     </option>
   </component>

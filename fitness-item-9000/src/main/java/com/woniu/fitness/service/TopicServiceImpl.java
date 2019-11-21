@@ -18,8 +18,8 @@ public class TopicServiceImpl implements ITopicService {
 
     @Override
     @Transient
-    public List<Topic> findAll() {
-        return topicMapper.selectAll();
+    public List<Topic> findAll(String message) {
+        return topicMapper.selectAll(message);
     }
 
     @Override
@@ -31,6 +31,11 @@ public class TopicServiceImpl implements ITopicService {
     @Override
     public int remove(int id) {
         return topicMapper.remove(id);
+    }
+
+    @Override
+    public int recover(int id) {
+        return topicMapper.recover(id);
     }
 
     @Override

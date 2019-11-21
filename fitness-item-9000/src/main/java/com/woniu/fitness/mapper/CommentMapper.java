@@ -13,7 +13,7 @@ public interface CommentMapper {
     int insert(Comment comment);
 
     //查询所有评论
-    List<Comment> selectAll();
+    List<Comment> selectAll(int dynamic_id);
 
     //删除评论
     @Delete("delete from t_comment where user_id=#{user_id} and dynamic_id=#{dynamic_id} and comment_id=#{comment_id}")
