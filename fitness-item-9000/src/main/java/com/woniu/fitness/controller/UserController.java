@@ -98,10 +98,12 @@ public class UserController {
         System.out.println(user);
         User user1=userService.findByAccount(user.getAccount());
         System.out.println(user);
+        //盐值加密
+        String password = MD5Maker.stringToMd5StringWithSalt(user.getPassword(), user.getAccount());
         if(user1==null){
             return "0";
         }else {
-            if(user1.getPassword().equals(user.getPassword())){
+            if(user1.getPassword().equals(password)){
                 return "1";
             }else {
                 return "0";
