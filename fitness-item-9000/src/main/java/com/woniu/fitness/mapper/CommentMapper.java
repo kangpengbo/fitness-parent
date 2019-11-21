@@ -4,7 +4,6 @@ import com.woniu.fitness.model.Comment;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 public interface CommentMapper {

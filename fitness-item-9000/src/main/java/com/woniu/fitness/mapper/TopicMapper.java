@@ -2,7 +2,6 @@ package com.woniu.fitness.mapper;
 
 import com.woniu.fitness.model.Topic;
 import org.apache.ibatis.annotations.*;
-
 import java.util.List;
 
 

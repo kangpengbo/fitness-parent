@@ -3,16 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.woniu.fitness.mapper.TopicMapper">
-    <!--<sql id="sele1">
-        <if test="message!=null and message.toString().trim()!=''">
-            and account LIKE '%${message}%'
-        </if>
-    </sql>-->
-    <!--<sql id="sele2">
-        <if test="info!=3">
-            and state = ${info}
-        </if>
-    </sql>-->
     <sql id="sele">
         <if test="message!=null and message.toString().trim()!=''">
             and topic_title LIKE '%${message}%'

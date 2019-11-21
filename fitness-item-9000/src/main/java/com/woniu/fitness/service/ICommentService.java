@@ -1,7 +1,6 @@
 package com.woniu.fitness.service;
 
 import com.woniu.fitness.model.Comment;
-
 import java.util.List;
 
 public interface ICommentService {

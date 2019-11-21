@@ -1,8 +1,6 @@
 package com.woniu.fitness.service;
 
 import com.woniu.fitness.model.Topic;
-import org.apache.ibatis.annotations.Update;
-
 import java.util.List;
 
 public interface ITopicService {
