@@ -49,7 +49,8 @@ public class ResponseResult {
         return map;
     }
 
-    public void setMap(Map<String, Object> map) {
+    public ResponseResult setMap(Map<String, Object> map) {
         this.map = map;
+        return this;
     }
 }
