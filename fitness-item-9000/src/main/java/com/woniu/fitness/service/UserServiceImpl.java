@@ -58,4 +58,11 @@ public class UserServiceImpl implements IUserService {
     public int updatePassword(User user) {
         return userMapper.updatePassword(user);
     }
+
+
+    //根据用户名查询用户
+    @Override
+    public User findByAccount(String account) {
+        return userMapper.selectByAccount(account);
+    }
 }
