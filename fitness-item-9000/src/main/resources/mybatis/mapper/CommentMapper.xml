@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.fitness.mapper.CommentMapper">
+    <!--<sql id="sele1">
+        <if test="message!=null and message.toString().trim()!=''">
+            and account LIKE '%${message}%'
+        </if>
+    </sql>-->
+    <!--<sql id="sele2">
+        <if test="info!=3">
+            and state = ${info}
+        </if>
+    </sql>-->
+    <select id="selectAll" resultType="comment">
+        select * from t_comment where 1=1
+        <!--<include refid="sele1"></include>
+        <include refid="sele2"></include>-->
+    </select>
+
+    <!--插入返回id的方法-->
+    <insert id="insert" parameterType="comment">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="comment_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_comment (user_id,dynamic_id,comment_content,create_time,main_comment_id) values
+        (#{user_id},#{dynamic_id},#{comment_content},#{create_time},#{main_comment_id})
+    </insert>
+
+    <delete id="remove">
+        delete from t_between_comment where main_comment_id=#{id} or secondary_comment_id =#{id}
+    </delete>
+
+    <delete id="deleteReply">
+        delete FROM t_comment where t_comment.comment_id in ${arr}
+    </delete>
+
+    <select id="findReplyById" resultType="Integer">
+        select comment_id from t_comment where main_comment_id = #{id}
+    </select>
+</mapper>

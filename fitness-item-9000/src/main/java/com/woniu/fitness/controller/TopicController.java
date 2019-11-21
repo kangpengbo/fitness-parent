@@ -4,6 +4,7 @@ import com.woniu.fitness.model.Topic;
 import com.woniu.fitness.response.ResponseResult;
 import com.woniu.fitness.service.ITopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +43,7 @@ public class TopicController {
 
     //添加话题
     @RequestMapping("/add")
-    public ResponseResult addTopic(Topic topic){
+    public ResponseResult addTopic(@RequestBody Topic topic){
         topicService.add(topic);
         return new ResponseResult("200","添加成功!");
     }
