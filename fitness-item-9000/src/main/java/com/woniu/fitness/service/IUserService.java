@@ -28,4 +28,7 @@ public interface IUserService {
     int update(User user);
 
     int updatePassword(User user);
+
+    //根据用户名查询用户
+    User findByAccount(String account);
 }
