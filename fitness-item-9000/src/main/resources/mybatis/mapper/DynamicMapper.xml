@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.fitness.mapper.DynamicMapper">
+    <insert id="insertDynamic" parameterType="dynamic">
+        INSERT into t_dynamic (user_id,user_account,dynamic_content,dynamic_image,dynamic_video,dynamic_views,dynamic_likes,create_time,state)
+        VALUES (#{user_id},#{user_account},#{dynamic_content},#{dynamic_image},#{dynamic_video},#{dynamic_views},#{dynamic_likes},#{create_time},#{state})
+    </insert>
+
+    <delete id="deleteDynamic" parameterType="int">
+        DELETE from t_dynamic where dynamic_id=#{id}
+    </delete>
+
+    <select id="selectAllDynamic" parameterType="int" resultType="dynamic">
+        SELECT * FROM t_dynamic where user_id=#{id}
+    </select>
+
+    <select id="selectAllNOCondition" resultType="dynamic">
+        SELECT * FROM t_dynamic
+    </select>
+
+    <select id="selectOneDynamicById" parameterType="int" resultType="dynamic">
+        SELECT * from t_dynamic where dynamic_id=#{id}
+    </select>
+
+    <select id="selectAllId" resultType="int">
+        select dynamic_id from t_dynamic
+    </select>
+
+    <update id="updateViews">
+        UPDATE t_dynamic SET dynamic_view
+    </update>
+
+    <!--=============分割线：后台mapper=================-->
+    <sql id="conSql">
+        <if test="account!=null and account.toString().trim() != ''">
+          and user_id=(select user_id from t_user where account=#{account})
+        </if>
+        <if test="begin_time!=null and end_time!=null">
+          and create_time BETWEEN #{begin_time} AND #{end_time}
+        </if>
+    </sql>
+    
+    <select id="selectAll" resultType="dynamic">
+        select * from t_dynamic
+        <where>
+            <choose>
+                <when test="account==null and begin_time==null and end_time==null">
+                    and to_days(create_time) = to_days(now())
+                </when>
+                <otherwise>
+                    <include refid="conSql"></include>
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
