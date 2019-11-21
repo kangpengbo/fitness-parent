@@ -30,4 +30,5 @@ public class Course {
     private Integer is_pay;
     private Integer type_id;
     private Integer course_state;
+    private double price;
 }
