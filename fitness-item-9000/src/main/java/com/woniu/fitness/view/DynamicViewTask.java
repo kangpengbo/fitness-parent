@@ -35,7 +35,7 @@ public class DynamicViewTask {
         List<Integer> list=dynamicService.findAllId();
         list.forEach(dynamic_id->{
             String key="dynamic:"+dynamic_id;
-            Integer views= Integer.parseInt(redisUtil.getValue(key));
+            Integer views= redisUtil.getValue(key);
             if(views>0){
                 int num=dynamicService.modifyViews(dynamic_id,views);
                 if(num!=0){

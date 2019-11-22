@@ -11,11 +11,13 @@ import com.woniu.fitness.service.IDynamicService;
 import com.woniu.fitness.utils.FileUrlUtil;
 import com.woniu.fitness.vo.DynamicVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 功能描述:<br>
@@ -36,8 +38,8 @@ public class DynamicController {
     private RedisUtil redisUtil;
 
     //返回值
-    private final static ResponseResult FALSE=new ResponseResult("500","操作有误！");
-    private final static ResponseResult TRUE=new ResponseResult("200","操作成功！");
+    private ResponseResult FALSE=new ResponseResult("500","操作有误！");
+    private ResponseResult TRUE=new ResponseResult("200","操作成功！");
 
     //添加动态(不能同时发视频和图片，只选其一)
     @PostMapping("/add")
@@ -95,8 +97,14 @@ public class DynamicController {
     //查询我的所有动态
     @GetMapping("/list")
     public ResponseResult getMyAllDynamic(){
-        List<Dynamic> dynamics=dynamicService.findAllDynamic(1); //测试user_id,后期改
+        Integer user_id=1; // 测试，后期改
+        List<Dynamic> dynamics=dynamicService.findAllDynamic(user_id);
+        for(Dynamic dynamic:dynamics){
+            //写入点赞数、浏览数、是否点赞
+           redisUtil.addViewsAndLikes(dynamic,user_id);
+        }
         return TRUE.add("dynamics",dynamics);
+
     }
 
     //分页查询广场所有动态
@@ -104,6 +112,12 @@ public class DynamicController {
     public ResponseResult getAllDynamic(@RequestParam(value = "pageNow",defaultValue = "1")Integer pageNow){
         PageHelper.startPage(pageNow,3); //每页3条，可修改
         List<Dynamic> dynamics=dynamicService.findAllNOCondition();
+        Integer user_id=1; // 测试，后期改
+        //
+        for(Dynamic dynamic:dynamics){
+            //写入点赞数、浏览数、是否点赞
+           redisUtil.addViewsAndLikes(dynamic,user_id);
+        }
         PageInfo<Dynamic> pageInfo=new PageInfo(dynamics,3);
         return TRUE.add("pageInfo",pageInfo);
     }
@@ -130,20 +144,40 @@ public class DynamicController {
         }else{ //不是第一次，自增1
             value= Math.toIntExact(redisUtil.incr(key));
         }
-        //浏览量
-        dynamic.setDynamic_views(value);
+        Integer user_id=1; //测试，后期改
+        //写入点赞数、浏览数、是否点赞
+        redisUtil.addViewsAndLikes(dynamic,user_id);
         //评论
         List<Comment> comments=commentService.findAll(id);
         return TRUE.add("dynamic",dynamic).add("comments",comments);
     }
 
-    //点赞加1
-    public ResponseResult incrlikes(Integer id){
-
-        return null;
+    //点赞or取消点赞
+    @RequestMapping("/likes")
+    public ResponseResult doLikes(Integer id){
+        String key="dynamic-"+id;
+        Integer user_id=1; //测试数据
+        if(redisUtil.isLikes(key,user_id)){
+            redisUtil.removeLikes(key, user_id);
+            return TRUE;
+        }
+        redisUtil.addLikes(key,user_id);
+        return TRUE;
     }
 
+    //test
+    @RequestMapping("/test")
+    public ResponseResult test(Integer id){
+        Set<Object> set=redisUtil.list("dynamic-"+id);
+        System.out.println(redisUtil.size("dynamic-"+id));
+        System.out.println(set);
+        return TRUE;
+    }
+
+
+
     //======================分割线，以下是后台管理接口不用看=============================================================
+
 
 
     //动态列表，搜索
