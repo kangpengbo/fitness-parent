@@ -24,8 +24,9 @@ public class Article {
     private Integer article_id;
     private String article_title;
     private String article_content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date create_time;
+    private String article_image;
     private Integer article_views;
     private Integer article_likes;
     private Integer article_state;

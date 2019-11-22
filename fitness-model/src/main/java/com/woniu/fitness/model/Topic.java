@@ -28,5 +28,6 @@ public class Topic {
     private Integer topic_likes;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date create_time;
+    private String topic_image;
     private Integer topic_state;
 }
