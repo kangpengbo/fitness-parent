@@ -30,7 +30,7 @@ public interface IDynamicService {
     //==================================================
 
     //查列表
-    List<Dynamic> findAll(DynamicVo vo);
+    List<Dynamic> findAll(String sel);
 
 
 

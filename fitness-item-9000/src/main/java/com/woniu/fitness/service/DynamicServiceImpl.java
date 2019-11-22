@@ -68,7 +68,7 @@ public class DynamicServiceImpl implements IDynamicService{
 
     //查列表
     @Override
-    public List<Dynamic> findAll(DynamicVo vo) {
-        return dynamicMapper.selectAll(vo);
+    public List<Dynamic> findAll(String sel) {
+        return dynamicMapper.selectAll(sel);
     }
 }
