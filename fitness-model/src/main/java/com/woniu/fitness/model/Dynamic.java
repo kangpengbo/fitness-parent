@@ -23,6 +23,7 @@ import java.util.Date;
 public class Dynamic {
     private Integer dynamic_id;
     private Integer user_id;
+    private String user_account;
     private String dynamic_content;
     private String dynamic_image;
     private String dynamic_video;
@@ -30,7 +31,7 @@ public class Dynamic {
     private Integer dynamic_likes;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date create_time;
-
+    private Integer state;
 
 
 

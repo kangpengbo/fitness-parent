@@ -1,7 +1,6 @@
 package com.woniu.fitness.service;
 
 import com.woniu.fitness.model.User;
-
 import java.util.List;
 
 /**
