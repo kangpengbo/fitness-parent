@@ -3,6 +3,7 @@ package com.woniu.fitness.service;
 import com.woniu.fitness.mapper.UserMapper;
 import com.woniu.fitness.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
+    @Transient
     public List<User> findAll(String message, int info) {
         return userMapper.selectAll(message, info);
     }
