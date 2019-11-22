@@ -182,9 +182,7 @@ public class DynamicController {
     //动态列表，搜索
     @GetMapping("/all")
     public ResponseResult getAll(String account){
-        System.out.println(account);
         List<Dynamic> dynamics=dynamicService.findAll(account);
-        System.out.println(dynamics);
         return TRUE.add("dynamics",dynamics);
     }
 
