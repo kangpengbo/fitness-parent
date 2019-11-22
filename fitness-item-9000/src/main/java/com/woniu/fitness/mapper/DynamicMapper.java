@@ -41,7 +41,7 @@ public interface DynamicMapper {
     //================================================================
 
     //查列表
-    List<Dynamic> selectAll(DynamicVo vo);
+    List<Dynamic> selectAll(@Param("sel") String sel);
 
 
 
