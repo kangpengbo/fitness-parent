@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -23,8 +24,9 @@ public class ArticleServiceImpl implements IArticleService {
     public int add(Article article) {
         article.setCreate_time(new Date());
         int result = articleMapper.insert(article);
-        redisTemplate.opsForHash().put(article.getArticle_id() + "", "article_likes", 10);
-        redisTemplate.opsForHash().put(article.getArticle_id() + "", "article_views", 10);
+        redisTemplate.opsForHash().put(article.getArticle_id() + "", "article_likes", 0);
+        redisTemplate.opsForHash().put(article.getArticle_id() + "", "article_views", 0);
+        redisTemplate.expire(article.getArticle_id() + "", 999999999, TimeUnit.DAYS);
         return result;
     }
 

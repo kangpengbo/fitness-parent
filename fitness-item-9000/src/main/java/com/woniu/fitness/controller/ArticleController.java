@@ -54,6 +54,7 @@ public class ArticleController {
     //修改文章
     @RequestMapping("/update")
     public ResponseResult update(@RequestBody Article article) {
+        System.out.println(article);
         articleService.update(article);
         return new ResponseResult("200", "修改成功!");
     }
@@ -83,6 +84,6 @@ public class ArticleController {
     @RequestMapping("/addView")
     public ResponseResult addView(int id) {
         articleService.addView(id);
-        return new ResponseResult("200","");
+        return new ResponseResult("200", "");
     }
 }
