@@ -3,9 +3,10 @@ package com.woniu.fitness.service;
 import com.woniu.fitness.mapper.CommentMapper;
 import com.woniu.fitness.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.beans.Transient;
+
 import java.util.Date;
 import java.util.List;
 

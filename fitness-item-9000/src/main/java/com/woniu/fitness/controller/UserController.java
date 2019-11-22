@@ -11,8 +11,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.util.*;
 
 /**
  * 功能描述:<br>
@@ -95,18 +96,32 @@ public class UserController {
     @RequestMapping("/login")
     public String login(@RequestBody User user) {
         System.out.println(user);
-        User user1=userService.findByAccount(user.getAccount());
+        User user1 = userService.findByAccount(user.getAccount());
         System.out.println(user);
         //盐值加密
         String password = MD5Maker.stringToMd5StringWithSalt(user.getPassword(), user.getAccount());
-        if(user1==null){
+        if (user1 == null) {
             return "0";
-        }else {
-            if(user1.getPassword().equals(password)){
+        } else {
+            if (user1.getPassword().equals(password)) {
                 return "1";
-            }else {
+            } else {
                 return "0";
             }
         }
+    }
+
+    @RequestMapping("/findOne")
+    public ResponseResult findOneByAccount(String account) {
+        User user = userService.findOneByAccount(account);
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(new Date());
+        cal2.setTime(user.getBirthday());
+        int age = cal1.get(Calendar.YEAR) - cal2.get(Calendar.YEAR) + 1;
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", user);
+        map.put("age", age);
+        return new ResponseResult("200", "查询成功").setMap(map);
     }
 }

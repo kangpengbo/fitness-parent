@@ -3,9 +3,10 @@ package com.woniu.fitness.service;
 import com.woniu.fitness.mapper.TopicMapper;
 import com.woniu.fitness.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.beans.Transient;
+
 import java.util.Date;
 import java.util.List;
 
@@ -43,8 +44,13 @@ public class TopicServiceImpl implements ITopicService {
     }
 
     @Override
-    public int updateLikes(int id) {
-        return topicMapper.updateLikes(id);
+    public int addLikes(int id) {
+        return topicMapper.addLikes(id);
+    }
+
+    @Override
+    public int substractLikes(int id) {
+        return topicMapper.substractLikes(id);
     }
 
     @Override
