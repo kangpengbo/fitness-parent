@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -32,7 +33,7 @@ public class UserController {
     private RedisTemplate<String, String> redisTemplate;
 
     @RequestMapping("list")
-    public List<User> list(String message, int info) {
+    public List<User> list(@RequestParam(defaultValue = "") String message,@RequestParam(defaultValue = "3") int info) {
         List<User> list = userService.findAll(message, info);
         return list;
     }
@@ -111,6 +112,7 @@ public class UserController {
         }
     }
 
+    //根据用户名查询单个用户，用于个人中心展示
     @RequestMapping("/findOne")
     public ResponseResult findOneByAccount(String account) {
         User user = userService.findOneByAccount(account);
@@ -123,5 +125,33 @@ public class UserController {
         map.put("user", user);
         map.put("age", age);
         return new ResponseResult("200", "查询成功").setMap(map);
+    }
+
+    //关注用户
+    @RequestMapping("/addAttention")
+    public ResponseResult addAttention(int user_id, int fan_id) {
+        userService.addAttention(user_id, fan_id);
+        return new ResponseResult("200", "关注成功");
+    }
+
+    //取关用户
+    @RequestMapping("/removeAttention")
+    public ResponseResult removeAttention(int user_id, int fan_id) {
+        userService.removeAttention(user_id, fan_id);
+        return new ResponseResult("200", "取关成功");
+    }
+
+    //根据user_id查询所有的粉丝
+    @RequestMapping("/getAllFans")
+    public ResponseResult getAllFans(int user_id) {
+        List<User> list = userService.findAllFans(user_id);
+        return new ResponseResult("200", "查询成功!").add("fanlist", list);
+    }
+
+    //根据user_id查询所有的已关注用户
+    @RequestMapping("/getAllAttentions")
+    public ResponseResult getAllAttentions(int user_id) {
+        List<User> list = userService.findAllAttention(user_id);
+        return new ResponseResult("200", "查询成功!").add("attentionlist", list);
     }
 }

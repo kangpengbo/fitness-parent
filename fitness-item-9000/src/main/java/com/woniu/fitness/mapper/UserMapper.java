@@ -2,6 +2,7 @@ package com.woniu.fitness.mapper;
 
 import com.woniu.fitness.model.User;
 import org.apache.ibatis.annotations.*;
+
 import java.util.List;
 
 public interface UserMapper {
@@ -34,4 +35,18 @@ public interface UserMapper {
     //根据用户名查询
     @Select("select * from t_user where account=#{value}")
     User selectByAccount(String account);
+
+    //根据user_id查询出所有的粉丝
+    List<User> selectAllFans(int user_id);
+
+    //根据user_id查询出所有已关注的用户
+    List<User> selectAllAttention(int user_id);
+
+    //添加关注
+    @Insert("insert into t_user_fan (user_id,fan_id) values (#{user_id},#{fan_id})")
+    int addAttention(@Param("user_id") int user_id, @Param("fan_id") int fan_id);
+
+    //取消关注
+    @Delete("delete from t_user_fan where user_id=#{user_id} and fan_id=#{fan_id}")
+    int removeAttention(@Param("user_id") int user_id, @Param("fan_id") int fan_id);
 }

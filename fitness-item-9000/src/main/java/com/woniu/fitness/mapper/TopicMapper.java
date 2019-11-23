@@ -11,7 +11,7 @@ public interface TopicMapper {
     List<Topic> selectAll(@Param("message") String message);
 
     //添加话题
-    @Insert("insert into t_topic (topic_title,topic_content,create_time) values (#{topic_title},#{topic_content},#{create_time})")
+    @Insert("insert into t_topic (topic_title,topic_content,topic_image,create_time) values (#{topic_title},#{topic_content},#{topic_image},#{create_time})")
     int insert(Topic topic);
 
     //删除话题

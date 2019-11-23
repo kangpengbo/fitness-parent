@@ -40,7 +40,7 @@
     </update>
 
     <update id="update">
-        update t_article set article_title=#{article_title},article_content=#{article_content} where article_id=#{article_id}
+        update t_article set article_title=#{article_title},article_content=#{article_content},article_image=#{article_image} where article_id=#{article_id}
     </update>
 
     <select id="selectById" resultType="article" parameterType="Integer">
@@ -51,7 +51,7 @@
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="article_id">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into t_article (article_title,article_content,create_time) values
-        (#{article_title},#{article_content},#{create_time})
+        insert into t_article (article_title,article_content,article_image,create_time) values
+        (#{article_title},#{article_content},#{article_image},#{create_time})
     </insert>
 </mapper>
