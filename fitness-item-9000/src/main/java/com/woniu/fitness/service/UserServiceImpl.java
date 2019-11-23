@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 
@@ -65,5 +66,25 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User findByAccount(String account) {
         return userMapper.selectByAccount(account);
+    }
+
+    @Override
+    public List<User> findAllFans(int user_id) {
+        return userMapper.selectAllFans(user_id);
+    }
+
+    @Override
+    public List<User> findAllAttention(int user_id) {
+        return userMapper.selectAllAttention(user_id);
+    }
+
+    @Override
+    public int addAttention(int user_id, int fan_id) {
+        return userMapper.addAttention(user_id, fan_id);
+    }
+
+    @Override
+    public int removeAttention(int user_id, int fan_id) {
+        return userMapper.removeAttention(user_id, fan_id);
     }
 }

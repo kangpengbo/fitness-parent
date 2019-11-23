@@ -1,6 +1,8 @@
 package com.woniu.fitness.service;
 
 import com.woniu.fitness.model.User;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -30,4 +32,16 @@ public interface IUserService {
 
     //根据用户名查询用户
     User findByAccount(String account);
+
+    //根据user_id查询出所有的粉丝
+    List<User> findAllFans(int user_id);
+
+    //根据user_id查询出所有已关注的用户
+    List<User> findAllAttention(int user_id);
+
+    //添加关注
+    int addAttention(int user_id, int fan_id);
+
+    //取消关注
+    int removeAttention(int user_id, int fan_id);
 }
