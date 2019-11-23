@@ -19,4 +19,17 @@
         <include refid="sele1"></include>
         <include refid="sele2"></include>
     </select>
+
+    <!--根据user_id找出所有的粉丝-->
+    <select id="selectAllFans" resultType="user">
+        SELECT * from t_user where user_id in
+        (select fan_id from t_user_fan where user_id=#{id})
+    </select>
+
+    <!--根据user_id找出所有的已关注的用户-->
+    <select id="selectAllAttention" resultType="user">
+        SELECT * from t_user where user_id in
+        (select user_id from t_user_fan where fan_id=#{id})
+    </select>
+
 </mapper>

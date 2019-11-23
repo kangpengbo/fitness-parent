@@ -21,7 +21,9 @@ public interface ITopicService {
     int updateView(int id);
 
     //修改话题点赞数
-    int updateLikes(int id);
+    int addLikes(int id);
+
+    int substractLikes(int id);
 
     //永久删除话题
     int delete(int id);

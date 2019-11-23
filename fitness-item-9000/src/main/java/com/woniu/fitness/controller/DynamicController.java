@@ -140,9 +140,8 @@ public class DynamicController {
         Integer value=null;
         if(!redisUtil.hasKey(key)){ //第一次浏览
            redisUtil.add(key,"1");
-            value=1;
         }else{ //不是第一次，自增1
-            value= Math.toIntExact(redisUtil.incr(key));
+            redisUtil.incr(key);
         }
         Integer user_id=1; //测试，后期改
         //写入点赞数、浏览数、是否点赞
@@ -182,11 +181,8 @@ public class DynamicController {
 
     //动态列表，搜索
     @GetMapping("/all")
-    public ResponseResult getAll(DynamicVo vo){
-        System.out.println(vo);
-        Date times=new Date();
-        System.out.println(times);
-        List<Dynamic> dynamics=dynamicService.findAll(vo);
+    public ResponseResult getAll(String account){
+        List<Dynamic> dynamics=dynamicService.findAll(account);
         return TRUE.add("dynamics",dynamics);
     }
 

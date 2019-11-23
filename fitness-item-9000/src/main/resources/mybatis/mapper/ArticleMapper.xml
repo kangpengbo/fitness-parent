@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.fitness.mapper.ArticleMapper">
+
+    <sql id="sele">
+        <if test="message!=null and message.toString().trim()!=''">
+            and article_title LIKE '%${message}%'
+        </if>
+    </sql>
+
+    <select id="selectAll" resultType="Article">
+        select * from t_article where 1=1
+        <include refid="sele"></include>
+        ORDER BY create_time DESC
+    </select>
+
+    <!--删除文章-->
+    <delete id="delete">
+        delete from t_article where article_id=#{id}
+    </delete>
+
+    <sql id="upda1">
+        <if test="state==1">
+            0
+        </if>
+    </sql>
+    <sql id="upda2">
+        <if test="state==0">
+            1
+        </if>
+    </sql>
+    <!--修改文章状态-->
+    <update id="operate">
+        update t_article set article_state=
+        <include refid="upda1"></include>
+        <include refid="upda2"></include>
+        where article_id=#{id}
+    </update>
+
+    <update id="update">
+        update t_article set article_title=#{article_title},article_content=#{article_content},article_image=#{article_image} where article_id=#{article_id}
+    </update>
+
+    <select id="selectById" resultType="article" parameterType="Integer">
+        select * from t_article where article_id=#{id}
+    </select>
+
+    <insert id="insert" parameterType="article">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="article_id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_article (article_title,article_content,article_image,create_time) values
+        (#{article_title},#{article_content},#{article_image},#{create_time})
+    </insert>
+</mapper>

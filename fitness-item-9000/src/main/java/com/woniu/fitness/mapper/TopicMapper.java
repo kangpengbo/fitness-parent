@@ -11,7 +11,7 @@ public interface TopicMapper {
     List<Topic> selectAll(@Param("message") String message);
 
     //添加话题
-    @Insert("insert into t_topic (topic_title,topic_content,create_time) values (#{topic_title},#{topic_content},#{create_time})")
+    @Insert("insert into t_topic (topic_title,topic_content,topic_image,create_time) values (#{topic_title},#{topic_content},#{topic_image},#{create_time})")
     int insert(Topic topic);
 
     //删除话题
@@ -26,9 +26,13 @@ public interface TopicMapper {
     @Update("update t_topic set topic_views=topic_views+1 where topic_id=#{id}")
     int updateView(int id);
 
-    //修改话题点赞数
+    //增加点赞数
     @Update("update t_topic set topic_likes=topic_likes+1 where topic_id=#{id}")
-    int updateLikes(int id);
+    int addLikes(int id);
+
+    //取消点赞
+    @Update("update t_topic set topic_likes=topic_likes-1 where topic_id=#{id}")
+    int substractLikes(int id);
 
     @Delete("delete from t_topic where topic_id=#{id}")
     int delete(int id);

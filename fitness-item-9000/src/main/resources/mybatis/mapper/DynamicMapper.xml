@@ -34,36 +34,19 @@
 
     <!--=============分割线：后台mapper=================-->
     <sql id="conSql">
-        <if test="account!=null and account.toString().trim() != ''">
+       <!-- <if test="#{account}!=null and #{account}.toString().trim() != ''">
           and user_id=(select user_id from t_user where account=#{account})
-        </if>
-        <if test="begin_time!=null and end_time!=null">
+        </if>-->
+      <!--  <if test="begin_time!=null and end_time!=null">
           and create_time BETWEEN #{begin_time} AND #{end_time}
+        </if>-->
+        <if test="sel!=null and sel.toString().trim()!=''">
+            and user_account=#{sel}
         </if>
     </sql>
     
-    <select id="selectAll" resultType="dynamic">
-        select * from t_dynamic
-        <where>
-            <choose>
-                <when test="account==null and begin_time==null and end_time==null">
-                    and to_days(create_time) = to_days(now())
-                </when>
-                <otherwise>
-                    <include refid="conSql"></include>
-                </otherwise>
-            </choose>
-        </where>
+    <select id="selectAll" resultType="dynamic" parameterType="string">
+        select * from t_dynamic WHERE to_days(create_time) = to_days(now())
+        <include refid="conSql"></include>
     </select>
-
-
-
-
-
-
-
-
-
-
-
 </mapper>
