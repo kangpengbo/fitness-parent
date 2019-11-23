@@ -13,11 +13,11 @@
     </delete>
 
     <select id="selectAllDynamic" parameterType="int" resultType="dynamic">
-        SELECT * FROM t_dynamic where user_id=#{id}
+        SELECT * FROM t_dynamic where user_id=#{id} order BY create_time DESC
     </select>
 
     <select id="selectAllNOCondition" resultType="dynamic">
-        SELECT * FROM t_dynamic
+        SELECT * FROM t_dynamic order BY create_time DESC
     </select>
 
     <select id="selectOneDynamicById" parameterType="int" resultType="dynamic">
