@@ -103,8 +103,7 @@ public class DynamicController {
             //写入点赞数、浏览数、是否点赞
            redisUtil.addViewsAndLikes(dynamic,user_id);
         }
-        return TRUE.add("dynamics",dynamics);
-
+        return new ResponseResult("200","操作成功！").add("dynamics",dynamics);
     }
 
     //分页查询广场所有动态
@@ -119,7 +118,7 @@ public class DynamicController {
            redisUtil.addViewsAndLikes(dynamic,user_id);
         }
         PageInfo<Dynamic> pageInfo=new PageInfo(dynamics,3);
-        return TRUE.add("pageInfo",pageInfo);
+        return new ResponseResult("200","操作成功！").add("pageInfo",pageInfo);
     }
 
     //动态详情
@@ -148,7 +147,7 @@ public class DynamicController {
         redisUtil.addViewsAndLikes(dynamic,user_id);
         //评论
         List<Comment> comments=commentService.findAll(id);
-        return TRUE.add("dynamic",dynamic).add("comments",comments);
+        return new ResponseResult("200","操作成功！").add("dynamic",dynamic).add("comments",comments);
     }
 
     //点赞or取消点赞
@@ -183,7 +182,7 @@ public class DynamicController {
     @GetMapping("/all")
     public ResponseResult getAll(String account){
         List<Dynamic> dynamics=dynamicService.findAll(account);
-        return TRUE.add("dynamics",dynamics);
+        return new ResponseResult("200","操作成功！").add("dynamics",dynamics);
     }
 
     //删除
