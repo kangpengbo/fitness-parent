@@ -2,7 +2,6 @@ package com.woniu.fitness.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.woniu.fitness.jwt.annotation.UserLoginToken;
 import com.woniu.fitness.model.Course;
 import com.woniu.fitness.model.Dynamic;
 import com.woniu.fitness.response.ResponseResult;
@@ -32,7 +31,6 @@ public class CourseController {
     }
     //根据课程名称查询
     @RequestMapping("findByName")
-    @UserLoginToken
     public ResponseResult findByName(String name,@RequestParam(value = "pageNow",defaultValue = "1")Integer pageNow){
         System.out.println(name);
         PageHelper.startPage(pageNow,3); //每页3条，可修改
