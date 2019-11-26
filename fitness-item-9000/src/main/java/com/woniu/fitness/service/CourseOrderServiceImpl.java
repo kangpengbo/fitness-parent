@@ -27,6 +27,7 @@ public class CourseOrderServiceImpl implements ICourseOrderService {
         courseOrder.setCreate_time(local);
         courseOrder.setChange_time(local);
         courseOrder.setOrder_number(KeyUtil.generateUniqueKey());
+        courseOrderMapper.insertUserCourse(courseOrder.getUser_id(), courseOrder.getCourse_id());
         return courseOrderMapper.insert(courseOrder);
     }
 
@@ -43,5 +44,11 @@ public class CourseOrderServiceImpl implements ICourseOrderService {
         String local1 = sdf.format(new Date());
         Date local = sdf.parse(local1);
         return courseOrderMapper.remove(order_number, local);
+    }
+
+    //根据user_id和course_id更新中间表
+    @Override
+    public int insertUserCourse(int user_id, int course_id) {
+        return courseOrderMapper.insertUserCourse(user_id, course_id);
     }
 }
