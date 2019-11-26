@@ -23,11 +23,11 @@ spring:
     #端口
     port: 6379
     #索引库
-    database: 1
+    database: 2
     #密码
     password:
     #超时时间
-    timeout: 5000ms
+    timeout: 50000ms
 
 eureka:
   client:
