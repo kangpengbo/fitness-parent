@@ -10,6 +10,8 @@ import java.util.List;
 public interface CourseMapper {
     @Select("select * from t_course")
     List<Course> selectAll();
+    @Select("select * from t_course where course_id=#{id}")
+    Course selectById(int id);
     @Insert("insert into t_course (course_name,introduction,course_time,fat_burning,difficulty,instrument,video,crowd,is_pay,type_id) " +
             "values (#{course_name},#{introduction},#{course_time},#{fat_burning},#{difficulty},#{instrument},#{video}," +
             "#{crowd},#{is_pay},#{type_id})")

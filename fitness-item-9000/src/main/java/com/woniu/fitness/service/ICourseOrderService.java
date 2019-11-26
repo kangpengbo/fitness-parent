@@ -1,9 +1,7 @@
 package com.woniu.fitness.service;
 
 import com.woniu.fitness.model.CourseOrder;
-
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
 public interface ICourseOrderService {
@@ -16,4 +14,7 @@ public interface ICourseOrderService {
 
     //用户删除订单，修改订单状态
     int remove(String order_number) throws ParseException;
+
+    //增加用户课程中间表
+    int insertUserCourse(int user_id, int course_id);
 }
