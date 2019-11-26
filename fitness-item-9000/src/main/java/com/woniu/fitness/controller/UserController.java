@@ -1,5 +1,6 @@
 package com.woniu.fitness.controller;
 
+import com.woniu.fitness.jwt.jwtService.TokenService;
 import com.woniu.fitness.model.User;
 import com.woniu.fitness.response.ResponseResult;
 import com.woniu.fitness.service.UserServiceImpl;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -31,6 +35,8 @@ public class UserController {
     private UserServiceImpl userService;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    TokenService tokenService;
 
     @RequestMapping("list")
     public List<User> list(@RequestParam(defaultValue = "") String message,@RequestParam(defaultValue = "3") int info) {
@@ -95,7 +101,7 @@ public class UserController {
 
     /*用户登录*/
     @RequestMapping("/login")
-    public String login(@RequestBody User user) {
+    public String login(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
         System.out.println(user);
         User user1 = userService.findByAccount(user.getAccount());
         System.out.println(user);
@@ -105,6 +111,22 @@ public class UserController {
             return "0";
         } else {
             if (user1.getPassword().equals(password)) {
+                String token = tokenService.getToken(user1);
+               // 存在cookie中
+                Cookie cookie = new Cookie("token", token);
+                cookie.setMaxAge(3600);
+                //cookie.setDomain("localhost");
+                cookie.setDomain("api.woniu.com");
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                Cookie cookie2 = new Cookie("account", user1.getAccount());
+                cookie2.setMaxAge(3600);
+                //cookie.setDomain("localhost");
+                cookie2.setDomain("api.woniu.com");
+                cookie2.setPath("/");
+                response.addCookie(cookie2);
+                response.setCharacterEncoding("utf-8");
+                request.getSession().setAttribute("user", user1);
                 return "1";
             } else {
                 return "0";
