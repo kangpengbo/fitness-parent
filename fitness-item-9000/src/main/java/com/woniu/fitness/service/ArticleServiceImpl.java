@@ -26,7 +26,6 @@ public class ArticleServiceImpl implements IArticleService {
         int result = articleMapper.insert(article);
         redisTemplate.opsForHash().put(article.getArticle_id() + "", "article_likes", 0);
         redisTemplate.opsForHash().put(article.getArticle_id() + "", "article_views", 0);
-        redisTemplate.expire(article.getArticle_id() + "", 999999999, TimeUnit.DAYS);
         return result;
     }
 
