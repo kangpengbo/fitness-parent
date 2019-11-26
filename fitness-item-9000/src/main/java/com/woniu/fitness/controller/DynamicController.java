@@ -51,7 +51,7 @@ public class DynamicController {
         //用户信息
         User user= (User) session.getAttribute("user");
         dynamic.setUser_id(user.getUser_id());
-        dynamic.setUser_account(user.getAccount());
+        dynamic.setNickname(user.getNickname());
        /* dynamic.setUser_id(1); //测试,后期改
         dynamic.setUser_account("jack"); //测试,后期改*/
         //时间

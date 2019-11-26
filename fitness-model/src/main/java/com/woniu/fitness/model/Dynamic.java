@@ -23,7 +23,7 @@ import java.util.Date;
 public class Dynamic {
     private Integer dynamic_id;
     private Integer user_id;
-    private String user_account;
+    private String nickname;
     private String dynamic_content;
     private String dynamic_image;
     private String dynamic_video;
