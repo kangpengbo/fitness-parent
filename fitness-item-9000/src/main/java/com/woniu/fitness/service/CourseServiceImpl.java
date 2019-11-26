@@ -27,6 +27,11 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public Course findById(int id) {
+        return courseMapper.selectById(id);
+    }
+
+    @Override
     public List<Course> findByName(String name) {
         return courseMapper.selectByName(name);
     }
