@@ -64,6 +64,11 @@ public class DynamicServiceImpl implements IDynamicService{
         return dynamicMapper.updateViews(dynamic_id,views);
     }
 
+    @Override
+    public List<Dynamic> findAttentionDynamic(int fan_id) {
+        return dynamicMapper.selectAttetionDynamic(fan_id);
+    }
+
     //=======================================================================================
 
     //查列表

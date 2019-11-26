@@ -32,6 +32,15 @@
         UPDATE t_dynamic SET dynamic_view
     </update>
 
+
+    <select id="selectAttetionDynamic" parameterType="int" resultType="dynamic">
+        select d.*
+        from t_dynamic d
+        INNER JOIN t_user_fan u
+        on u.fan_id=#{id} and d.user_id=u.user_id
+        order BY create_time DESC
+    </select>
+
     <!--=============分割线：后台mapper=================-->
     <sql id="conSql">
        <!-- <if test="#{account}!=null and #{account}.toString().trim() != ''">
