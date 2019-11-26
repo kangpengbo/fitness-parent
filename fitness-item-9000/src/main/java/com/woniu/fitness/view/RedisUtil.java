@@ -109,4 +109,34 @@ public class RedisUtil {
             dynamic.setDynamic_views(0);
         }
     }
+
+    //封装浏览数，点赞数 没有是否点赞
+    public void addNoIsLike(Dynamic dynamic){
+        String likes_key="dynamic-"+dynamic.getDynamic_id();
+        //点赞数
+        if(size(likes_key)>0){ //如果点赞数大于0
+            Integer dynamic_likes= Math.toIntExact(size(likes_key));
+            dynamic.setDynamic_likes(dynamic_likes);
+        }else{
+            dynamic.setDynamic_likes(0);
+        }
+        //浏览数
+        String views_key="dynamic:"+dynamic.getDynamic_id();
+        if(hasKey(views_key)){
+            Integer dynamic_views= getValue(views_key);
+            dynamic.setDynamic_views(dynamic_views);
+        }else{
+            dynamic.setDynamic_views(0);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }

@@ -4,8 +4,8 @@
 
 <mapper namespace="com.woniu.fitness.mapper.DynamicMapper">
     <insert id="insertDynamic" parameterType="dynamic">
-        INSERT into t_dynamic (user_id,user_account,dynamic_content,dynamic_image,dynamic_video,dynamic_views,dynamic_likes,create_time,state)
-        VALUES (#{user_id},#{user_account},#{dynamic_content},#{dynamic_image},#{dynamic_video},#{dynamic_views},#{dynamic_likes},#{create_time},#{state})
+        INSERT into t_dynamic (user_id,nickname,dynamic_content,dynamic_image,dynamic_video,dynamic_views,dynamic_likes,create_time,state)
+        VALUES (#{user_id},#{nickname},#{dynamic_content},#{dynamic_image},#{dynamic_video},#{dynamic_views},#{dynamic_likes},#{create_time},#{state})
     </insert>
 
     <delete id="deleteDynamic" parameterType="int">
@@ -32,6 +32,15 @@
         UPDATE t_dynamic SET dynamic_view
     </update>
 
+
+    <select id="selectAttetionDynamic" parameterType="int" resultType="dynamic">
+        select d.*
+        from t_dynamic d
+        INNER JOIN t_user_fan u
+        on u.fan_id=#{id} and d.user_id=u.user_id
+        order BY create_time DESC
+    </select>
+
     <!--=============分割线：后台mapper=================-->
     <sql id="conSql">
        <!-- <if test="#{account}!=null and #{account}.toString().trim() != ''">
@@ -41,7 +50,7 @@
           and create_time BETWEEN #{begin_time} AND #{end_time}
         </if>-->
         <if test="sel!=null and sel.toString().trim()!=''">
-            WHERE user_account=#{sel}
+            WHERE nickname=#{sel}
         </if>
     </sql>
     

@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ICourseService {
     List<Course> findAll();
+    Course findById(int id);
     //模糊查询
     List<Course> findByName(String name);
     Course findOne(Integer id);
