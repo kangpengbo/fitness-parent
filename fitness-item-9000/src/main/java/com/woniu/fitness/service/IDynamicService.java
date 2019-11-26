@@ -27,6 +27,7 @@ public interface IDynamicService {
     //更新浏览数
     int modifyViews(int dynamic_id, int views);
 
+    List<Dynamic> findAttentionDynamic(int fan_id);
     //==================================================
 
     //查列表

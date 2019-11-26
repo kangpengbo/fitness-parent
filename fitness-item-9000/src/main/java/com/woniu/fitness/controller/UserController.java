@@ -1,5 +1,6 @@
 package com.woniu.fitness.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.woniu.fitness.jwt.jwtService.TokenService;
 import com.woniu.fitness.model.User;
 import com.woniu.fitness.response.ResponseResult;
@@ -101,14 +102,16 @@ public class UserController {
 
     /*用户登录*/
     @RequestMapping("/login")
-    public String login(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
+    public Object login(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
         System.out.println(user);
+        JSONObject jsonObject=new JSONObject();
         User user1 = userService.findByAccount(user.getAccount());
         System.out.println(user);
         //盐值加密
         String password = MD5Maker.stringToMd5StringWithSalt(user.getPassword(), user.getAccount());
         if (user1 == null) {
-            return "0";
+            jsonObject.put("message","0");
+            return jsonObject;
         } else {
             if (user1.getPassword().equals(password)) {
                 String token = tokenService.getToken(user1);
@@ -127,9 +130,12 @@ public class UserController {
                 response.addCookie(cookie2);
                 response.setCharacterEncoding("utf-8");
                 request.getSession().setAttribute("user", user1);
-                return "1";
+                jsonObject.put("user",user1);
+                jsonObject.put("message","1");
+                return jsonObject;
             } else {
-                return "0";
+                jsonObject.put("message","0");
+                return jsonObject;
             }
         }
     }

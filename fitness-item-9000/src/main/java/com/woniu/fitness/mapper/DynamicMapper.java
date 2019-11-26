@@ -38,6 +38,9 @@ public interface DynamicMapper {
     //更新数据库浏览数
     int updateViews(int dynamic_id, int views);
 
+    //关注人的动态
+    List<Dynamic> selectAttetionDynamic(int fan_id);
+
     //================================================================
 
     //查列表
