@@ -122,9 +122,16 @@ public class DynamicController {
         PageHelper.startPage(pageNow,8); //每页3条，可修改
         List<Dynamic> dynamics=dynamicService.findAllNOCondition();
         // Integer user_id=1; // 测试，后期改
-        for(Dynamic dynamic:dynamics){
-            //写入点赞数、浏览数、是否点赞
-           redisUtil.addViewsAndLikes(dynamic,user.getUser_id());
+        if(user!=null){
+            for(Dynamic dynamic:dynamics){
+                //写入点赞数、浏览数、是否点赞
+                redisUtil.addViewsAndLikes(dynamic,user.getUser_id());
+            }
+        }else{
+            for(Dynamic dynamic:dynamics){
+                //写入点赞数、浏览数
+                redisUtil.addNoIsLike(dynamic);
+            }
         }
         PageInfo<Dynamic> pageInfo=new PageInfo(dynamics,3);
         return new ResponseResult("200","操作成功！").add("pageInfo",pageInfo);
@@ -132,8 +139,7 @@ public class DynamicController {
 
     //动态详情
     @GetMapping("/detail")
-    public ResponseResult getDetailAndComment(Integer id,HttpSession session){
-        User user= (User) session.getAttribute("user");
+    public ResponseResult getDetailAndComment(Integer id){
         //空参
         if(id==null){
             return FALSE;
@@ -153,8 +159,8 @@ public class DynamicController {
             redisUtil.incr(key);
         }
        // Integer user_id=1; //测试，后期改
-        //写入点赞数、浏览数、是否点赞
-        redisUtil.addViewsAndLikes(dynamic,user.getUser_id());
+        //写入点赞数、浏览数
+        redisUtil.addNoIsLike(dynamic);
         //评论
         List<Comment> comments=commentService.findAll(id);
         return new ResponseResult("200","操作成功！").add("dynamic",dynamic).add("comments",comments);
