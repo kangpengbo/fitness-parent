@@ -139,7 +139,12 @@ public class UserController {
             }
         }
     }
-
+    /*用户注销*/
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "1";
+    }
     //根据用户名查询单个用户，用于个人中心展示
     @RequestMapping("/findOne")
     public ResponseResult findOneByAccount(String account) {
