@@ -24,4 +24,7 @@ public interface CourseMapper {
     Course selectOneById(Integer id);
     //根据课程名称做模糊查询
     List<Course> selectByName(String name);
+
+    @Update("update t_course set course_state=3 where type_id=#{id} ")
+    void deleteByTypeId(Integer id);
 }
