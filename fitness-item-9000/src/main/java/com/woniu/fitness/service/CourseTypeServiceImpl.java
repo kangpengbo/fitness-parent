@@ -1,5 +1,6 @@
 package com.woniu.fitness.service;
 
+import com.woniu.fitness.mapper.CourseMapper;
 import com.woniu.fitness.mapper.CourseTypeMapper;
 import com.woniu.fitness.model.CourseType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.List;
 public class CourseTypeServiceImpl implements ICourseTypeService {
     @Autowired
     CourseTypeMapper courseTypeMapper;
+    @Autowired
+    CourseMapper courseMapper;
     @Override
     public List<CourseType> findAll() {
         return courseTypeMapper.selectAll();
@@ -33,7 +36,9 @@ public class CourseTypeServiceImpl implements ICourseTypeService {
 
     @Override
     public void removeOne(int id) {
+
         courseTypeMapper.deleteOne(id);
+        courseMapper.deleteByTypeId(id);
     }
 
     @Override
