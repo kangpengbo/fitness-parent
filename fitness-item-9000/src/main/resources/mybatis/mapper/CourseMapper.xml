@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.woniu.fitness.mapper.CourseMapper">
+    <select id="selectByName" resultType="Course">
+        select * from t_course
+       <where>
+           <if test="value!=null">
+               and course_name like "%${value}%"
+           </if>
+       </where>
+    </select>
+</mapper>
