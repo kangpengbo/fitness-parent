@@ -104,7 +104,7 @@ public class DynamicController {
     public ResponseResult getMyAllDynamic(@RequestParam(value = "pageNow",defaultValue = "1")Integer pageNow,HttpSession session){
         //当前用户
         User user= (User) session.getAttribute("user");
-        PageHelper.startPage(pageNow,3); //每页3条，可修改
+        PageHelper.startPage(pageNow,8); //每页3条，可修改
         List<Dynamic> dynamics=dynamicService.findAllDynamic(user.getUser_id());
         for(Dynamic dynamic:dynamics){
             //写入点赞数、浏览数、是否点赞
@@ -119,7 +119,7 @@ public class DynamicController {
     public ResponseResult getAllDynamic(@RequestParam(value = "pageNow",defaultValue = "1")Integer pageNow,HttpSession session){
         //当前用户
         User user= (User) session.getAttribute("user");
-        PageHelper.startPage(pageNow,3); //每页3条，可修改
+        PageHelper.startPage(pageNow,8); //每页3条，可修改
         List<Dynamic> dynamics=dynamicService.findAllNOCondition();
         // Integer user_id=1; // 测试，后期改
         for(Dynamic dynamic:dynamics){
@@ -178,7 +178,7 @@ public class DynamicController {
     @RequestMapping("/attention")
     public ResponseResult attentionDynamic(@RequestParam(value = "pageNow",defaultValue = "1")Integer pageNow,HttpSession session){
         User user= (User) session.getAttribute("user");
-        PageHelper.startPage(pageNow,3); //每页3条，可修改
+        PageHelper.startPage(pageNow,8); //每页3条，可修改
         List<Dynamic> dynamics=dynamicService.findAttentionDynamic(11);
         for(Dynamic dynamic:dynamics){
             //写入点赞数、浏览数、是否点赞
