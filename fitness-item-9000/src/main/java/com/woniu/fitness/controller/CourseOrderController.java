@@ -37,4 +37,11 @@ public class CourseOrderController {
         courseOrderService.remove(order_number);
         return new ResponseResult("200", "删除成功!");
     }
+
+    //直接添加课程，需要user_id和course_id
+    @RequestMapping("/addCourse")
+    public ResponseResult addCourse(int user_id, int course_id) {
+        courseOrderService.insertUserCourse(user_id, course_id);
+        return new ResponseResult("200", "添加成功!");
+    }
 }
