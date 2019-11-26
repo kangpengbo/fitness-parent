@@ -6,6 +6,9 @@ mybatis:
   mapper-locations:
     - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   application:
     name: item-service-9000
   datasource:
