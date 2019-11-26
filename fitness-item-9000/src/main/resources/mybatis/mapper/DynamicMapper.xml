@@ -41,12 +41,12 @@
           and create_time BETWEEN #{begin_time} AND #{end_time}
         </if>-->
         <if test="sel!=null and sel.toString().trim()!=''">
-            and user_account=#{sel}
+            WHERE user_account=#{sel}
         </if>
     </sql>
     
     <select id="selectAll" resultType="dynamic" parameterType="string">
-        select * from t_dynamic WHERE to_days(create_time) = to_days(now())
+        select * from t_dynamic
         <include refid="conSql"></include>
     </select>
 </mapper>
