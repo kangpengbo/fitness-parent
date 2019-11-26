@@ -3,10 +3,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.woniu.fitness.mapper.CommentMapper">
-    <select id="selectAll" resultType="comment">
-        select * from t_comment where dynamic_id=#{id}
-        <!--<include refid="sele1"></include>
-        <include refid="sele2"></include>-->
+
+    <resultMap id="baseResultMap" type="com.woniu.fitness.model.Comment">
+        <id column="comment_id" property="comment_id"/>
+        <result column="comment_content" property="comment_content"/>
+        <result column="dynamic_id" property="dynamic_id"/>
+        <result column="create_time" property="create_time"/>
+        <result column="user_id" property="user_id"/>
+        <result column="main_comment_id" property="main_comment_id"/>
+        <association property="user" javaType="com.woniu.fitness.model.User">
+            <id property="user_id" column="user_id"/>
+            <result column="account" property="account"/>
+            <result column="nickname" property="nickname"/>
+        </association>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="baseResultMap">
+        select c.*,u.account,u.nickname from t_comment c,t_user u where c.user_id=u.user_id and dynamic_id=#{id}
     </select>
 
     <!--插入返回id的方法-->

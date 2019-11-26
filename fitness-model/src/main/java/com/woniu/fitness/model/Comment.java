@@ -28,4 +28,5 @@ public class Comment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date create_time;
     private Integer main_comment_id;
+    private User user;
 }
