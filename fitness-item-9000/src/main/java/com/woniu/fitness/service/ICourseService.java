@@ -13,4 +13,5 @@ public interface ICourseService {
     void removeOne(Integer id);
     void addOne(Course course);
     void modifyOne(Course course);
+    List<Course> findByUserId(int id);
 }

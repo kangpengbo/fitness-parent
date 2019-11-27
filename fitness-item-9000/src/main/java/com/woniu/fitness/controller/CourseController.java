@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.woniu.fitness.model.Course;
 import com.woniu.fitness.model.Dynamic;
+import com.woniu.fitness.model.User;
 import com.woniu.fitness.response.ResponseResult;
 import com.woniu.fitness.service.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -64,5 +66,12 @@ public class CourseController {
         System.out.println(id);
         courseService.removeOne(id);
         return "success";
+    }
+    //删除课程g
+    @RequestMapping("findByUserId")
+    public List<Course> findByUserId(HttpServletRequest  request){
+        User user= (User) request.getSession().getAttribute("user");
+        List<Course> list=courseService.findByUserId(user.getUser_id());
+        return list;
     }
 }

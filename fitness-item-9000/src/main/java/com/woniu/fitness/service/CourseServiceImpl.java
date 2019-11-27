@@ -55,4 +55,9 @@ public class CourseServiceImpl implements ICourseService {
     public void modifyOne(Course course) {
         courseMapper.updateById(course);
     }
+
+    @Override
+    public List<Course> findByUserId(int id) {
+        return courseMapper.selectByUserId(id);
+    }
 }

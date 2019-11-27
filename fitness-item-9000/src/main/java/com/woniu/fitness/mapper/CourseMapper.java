@@ -29,4 +29,6 @@ public interface CourseMapper {
 
     @Update("update t_course set course_state=3 where type_id=#{id} ")
     void deleteByTypeId(Integer id);
+    @Select("SELECT t_course.* from t_user_course,t_course where t_user_course.user_id=#{id} and t_user_course.course_id=t_course.course_id")
+    List<Course> selectByUserId(int id);
 }
