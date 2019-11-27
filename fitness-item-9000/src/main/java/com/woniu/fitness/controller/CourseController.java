@@ -28,8 +28,9 @@ public class CourseController {
     private CourseServiceImpl courseService;
     //查询全部课程
     @GetMapping("list")
-    public List<Course> list(){
-        return courseService.findAll();
+    public List<Course> list(String name){
+
+        return courseService.findByName(name);
     }
     //根据课程名称查询
     @RequestMapping("findByName")
