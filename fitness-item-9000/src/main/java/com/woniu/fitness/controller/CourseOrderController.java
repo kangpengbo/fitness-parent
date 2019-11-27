@@ -23,8 +23,10 @@ public class CourseOrderController {
         int result = courseOrderService.creatOrder(courseOrder);
         if (result == 1) {
             return new ResponseResult("200", "成功生成!");
-        } else {
+        } else if (result == 0) {
             return new ResponseResult("100", "金额不足，购买失败!");
+        } else {
+            return new ResponseResult("100", "已添加该课程，不可重复添加!");
         }
 
     }
@@ -46,7 +48,11 @@ public class CourseOrderController {
     //直接添加课程，需要user_id和course_id
     @RequestMapping("/addCourse")
     public ResponseResult addCourse(int user_id, int course_id) {
-        courseOrderService.insertUserCourse(user_id, course_id);
-        return new ResponseResult("200", "添加成功!");
+        int result = courseOrderService.insertUserCourse(user_id, course_id);
+        if (result == 0) {
+            return new ResponseResult("100", "已添加该课程，不可重复添加!");
+        } else {
+            return new ResponseResult("200", "添加成功!");
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.woniu.fitness.service;
 
+import com.woniu.fitness.mapper.CourseMapper;
 import com.woniu.fitness.mapper.CourseOrderMapper;
 import com.woniu.fitness.mapper.UserMapper;
+import com.woniu.fitness.model.Course;
 import com.woniu.fitness.model.CourseOrder;
 import com.woniu.fitness.utils.KeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class CourseOrderServiceImpl implements ICourseOrderService {
     private CourseOrderMapper courseOrderMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private CourseMapper courseMapper;
 
     //生成订单
     @Override
@@ -31,6 +35,13 @@ public class CourseOrderServiceImpl implements ICourseOrderService {
         courseOrder.setCreate_time(local);
         courseOrder.setChange_time(local);
         courseOrder.setOrder_number(KeyUtil.generateUniqueKey());
+        //通过user_id查询是否拥有该课程
+        List<Course> list = courseMapper.selectByUserId(courseOrder.getUser_id());
+        for (Course c : list) {
+            if (c.getCourse_id() == courseOrder.getCourse_id()) {
+                return 2;
+            }
+        }
         //根据user_id查询用户判断金额是否足够
         if (userMapper.selectById(courseOrder.getUser_id()).getMoney() >= courseOrder.getAmount()) {
             //消费金额
@@ -62,6 +73,13 @@ public class CourseOrderServiceImpl implements ICourseOrderService {
     //根据user_id和course_id更新中间表
     @Override
     public int insertUserCourse(int user_id, int course_id) {
+        //通过user_id查询是否拥有该课程
+        List<Course> list = courseMapper.selectByUserId(user_id);
+        for (Course c : list) {
+            if (c.getCourse_id() == course_id) {
+                return 0;
+            }
+        }
         return courseOrderMapper.insertUserCourse(user_id, course_id);
     }
 }
