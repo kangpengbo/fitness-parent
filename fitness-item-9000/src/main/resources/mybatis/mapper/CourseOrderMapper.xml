@@ -6,8 +6,8 @@
 
     <!--插入返回id的方法-->
     <insert id="insert" parameterType="courseOrder">
-        insert into t_course_order (course_id,user_id,order_number,create_time,pay_number,change_time,pay_time,amount) values
-        (#{course_id},#{user_id},#{order_number},#{create_time},#{pay_number},#{change_time},#{pay_time},#{amount})
+        insert into t_course_order (course_id,user_id,order_number,create_time,change_time,pay_time,amount) values
+        (#{course_id},#{user_id},#{order_number},#{create_time},#{change_time},#{pay_time},#{amount})
     </insert>
 
 </mapper>

@@ -27,7 +27,6 @@ public class CourseOrder {
     private String order_number;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date create_time;
-    private String pay_number;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pay_time;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
