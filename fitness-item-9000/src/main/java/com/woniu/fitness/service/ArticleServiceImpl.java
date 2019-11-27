@@ -7,10 +7,8 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @Transactional
@@ -49,10 +47,12 @@ public class ArticleServiceImpl implements IArticleService {
     public List<Article> findAll(String message) {
         List<Article> list = articleMapper.selectAll(message);
         for (Article a : list) {
-            int likes = (int) redisTemplate.opsForHash().get(a.getArticle_id() + "", "article_likes");
-            int views = (int) redisTemplate.opsForHash().get(a.getArticle_id() + "", "article_views");
-            a.setArticle_likes(likes);
-            a.setArticle_views(views);
+            if (redisTemplate.opsForHash().hasKey(a.getArticle_id() + "", "article_likes")){
+                int likes = (int) redisTemplate.opsForHash().get(a.getArticle_id() + "", "article_likes");
+                int views = (int) redisTemplate.opsForHash().get(a.getArticle_id() + "", "article_views");
+                a.setArticle_likes(likes);
+                a.setArticle_views(views);
+            }
         }
         return list;
     }
