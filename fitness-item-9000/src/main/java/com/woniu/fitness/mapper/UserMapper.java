@@ -16,6 +16,14 @@ public interface UserMapper {
     @Insert("insert into t_user (account,password,nickname,sex,birthday,telephone,email,create_time) values (#{account},#{password},#{nickname},#{sex},#{birthday},#{telephone},#{email},#{create_time})")
     int insert(User user);
 
+    //给用户充值
+    @Update("update t_user set money=money + ${money} where user_id=#{user_id}")
+    int addMoney(@Param("user_id") int user_id, @Param("money") double money);
+
+    //消费金额
+    @Update("update t_user set money=money - ${money} where user_id=#{user_id}")
+    int consume(@Param("user_id") int user_id, @Param("money") double money);
+
     /*拉黑*/
     @Update("update t_user set state=0 where user_id=#{id}")
     int defriend(int id);
@@ -49,4 +57,8 @@ public interface UserMapper {
     //取消关注
     @Delete("delete from t_user_fan where user_id=#{user_id} and fan_id=#{fan_id}")
     int removeAttention(@Param("user_id") int user_id, @Param("fan_id") int fan_id);
+
+    //根据user_id查询用户
+    @Select("select * from t_user where user_id=#{id}")
+    User selectById(int id);
 }

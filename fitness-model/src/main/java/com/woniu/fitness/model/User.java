@@ -21,7 +21,7 @@ import java.util.Date;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable{
+public class User implements Serializable {
     private Integer user_id;
     private String account;
     private String password;
@@ -41,21 +41,8 @@ public class User implements Serializable{
     private Date create_time;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date update_time;
+    private Double money;
     private Integer state;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

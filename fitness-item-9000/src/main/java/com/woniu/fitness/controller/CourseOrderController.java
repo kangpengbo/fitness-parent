@@ -20,8 +20,13 @@ public class CourseOrderController {
     //生成订单
     @RequestMapping("/creat")
     public ResponseResult creat(@RequestBody CourseOrder courseOrder) throws ParseException {
-        courseOrderService.creatOrder(courseOrder);
-        return new ResponseResult("200", "成功生成!");
+        int result = courseOrderService.creatOrder(courseOrder);
+        if (result == 1) {
+            return new ResponseResult("200", "成功生成!");
+        } else {
+            return new ResponseResult("100", "金额不足，购买失败!");
+        }
+
     }
 
     //根据用户id查询订单

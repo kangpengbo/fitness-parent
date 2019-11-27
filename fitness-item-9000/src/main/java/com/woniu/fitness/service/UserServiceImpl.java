@@ -87,4 +87,14 @@ public class UserServiceImpl implements IUserService {
     public int removeAttention(int user_id, int fan_id) {
         return userMapper.removeAttention(user_id, fan_id);
     }
+
+    @Override
+    public int addMoney(int user_id, double money) {
+        return userMapper.addMoney(user_id, money);
+    }
+
+    @Override
+    public int consume(int user_id, double money) {
+        return userMapper.consume(user_id, money);
+    }
 }

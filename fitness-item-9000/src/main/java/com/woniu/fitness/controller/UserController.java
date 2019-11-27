@@ -40,7 +40,7 @@ public class UserController {
     TokenService tokenService;
 
     @RequestMapping("list")
-    public List<User> list(@RequestParam(defaultValue = "") String message,@RequestParam(defaultValue = "3") int info) {
+    public List<User> list(@RequestParam(defaultValue = "") String message, @RequestParam(defaultValue = "3") int info) {
         List<User> list = userService.findAll(message, info);
         return list;
     }
@@ -104,18 +104,18 @@ public class UserController {
     @RequestMapping("/login")
     public Object login(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
         System.out.println(user);
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
         User user1 = userService.findByAccount(user.getAccount());
         System.out.println(user);
         //盐值加密
         String password = MD5Maker.stringToMd5StringWithSalt(user.getPassword(), user.getAccount());
         if (user1 == null) {
-            jsonObject.put("message","0");
+            jsonObject.put("message", "0");
             return jsonObject;
         } else {
             if (user1.getPassword().equals(password)) {
                 String token = tokenService.getToken(user1);
-               // 存在cookie中
+                // 存在cookie中
                 Cookie cookie = new Cookie("token", token);
                 cookie.setMaxAge(3600);
                 //cookie.setDomain("localhost");
@@ -130,21 +130,23 @@ public class UserController {
                 response.addCookie(cookie2);
                 response.setCharacterEncoding("utf-8");
                 request.getSession().setAttribute("user", user1);
-                jsonObject.put("user",user1);
-                jsonObject.put("message","1");
+                jsonObject.put("user", user1);
+                jsonObject.put("message", "1");
                 return jsonObject;
             } else {
-                jsonObject.put("message","0");
+                jsonObject.put("message", "0");
                 return jsonObject;
             }
         }
     }
+
     /*用户注销*/
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest request){
+    public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
         return "1";
     }
+
     //根据用户名查询单个用户，用于个人中心展示
     @RequestMapping("/findOne")
     public ResponseResult findOneByAccount(String account) {
@@ -186,5 +188,12 @@ public class UserController {
     public ResponseResult getAllAttentions(int user_id) {
         List<User> list = userService.findAllAttention(user_id);
         return new ResponseResult("200", "查询成功!").add("attentionlist", list);
+    }
+
+    //给用户充值
+    @RequestMapping("/addMoney")
+    public ResponseResult addMoney(int user_id, double money) {
+        userService.addMoney(user_id, money);
+        return new ResponseResult("200", "充值成功!");
     }
 }

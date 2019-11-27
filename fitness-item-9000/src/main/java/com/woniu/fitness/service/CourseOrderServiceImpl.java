@@ -1,11 +1,13 @@
 package com.woniu.fitness.service;
 
 import com.woniu.fitness.mapper.CourseOrderMapper;
+import com.woniu.fitness.mapper.UserMapper;
 import com.woniu.fitness.model.CourseOrder;
 import com.woniu.fitness.utils.KeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.plugin2.message.Message;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,8 @@ import java.util.List;
 public class CourseOrderServiceImpl implements ICourseOrderService {
     @Autowired
     private CourseOrderMapper courseOrderMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     //生成订单
     @Override
@@ -27,7 +31,16 @@ public class CourseOrderServiceImpl implements ICourseOrderService {
         courseOrder.setCreate_time(local);
         courseOrder.setChange_time(local);
         courseOrder.setOrder_number(KeyUtil.generateUniqueKey());
+        //根据user_id查询用户判断金额是否足够
+        if (userMapper.selectById(courseOrder.getUser_id()).getMoney() >= courseOrder.getAmount()) {
+            //消费金额
+            userMapper.consume(courseOrder.getUser_id(), courseOrder.getAmount());
+        } else {
+            return 0;
+        }
+        //生成用户订单中间表
         courseOrderMapper.insertUserCourse(courseOrder.getUser_id(), courseOrder.getCourse_id());
+        //生成订单表
         return courseOrderMapper.insert(courseOrder);
     }
 

@@ -44,4 +44,10 @@ public interface IUserService {
 
     //取消关注
     int removeAttention(int user_id, int fan_id);
+
+    //充值
+    int addMoney(int user_id,double money);
+
+    //消费
+    int consume(int user_id,double money);
 }
