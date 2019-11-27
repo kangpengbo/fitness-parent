@@ -185,7 +185,7 @@ public class DynamicController {
     public ResponseResult attentionDynamic(@RequestParam(value = "pageNow",defaultValue = "1")Integer pageNow,HttpSession session){
         User user= (User) session.getAttribute("user");
         PageHelper.startPage(pageNow,8); //每页3条，可修改
-        List<Dynamic> dynamics=dynamicService.findAttentionDynamic(11);
+        List<Dynamic> dynamics=dynamicService.findAttentionDynamic(user.getUser_id());
         for(Dynamic dynamic:dynamics){
             //写入点赞数、浏览数、是否点赞
             redisUtil.addViewsAndLikes(dynamic,user.getUser_id());
