@@ -2,6 +2,7 @@ package com.woniu.fitness.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.woniu.fitness.jwt.annotation.UserLoginToken;
 import com.woniu.fitness.model.Course;
 import com.woniu.fitness.model.Dynamic;
 import com.woniu.fitness.model.User;
@@ -28,6 +29,7 @@ public class CourseController {
     private CourseServiceImpl courseService;
     //查询全部课程
     @GetMapping("list")
+    @UserLoginToken
     public List<Course> list(String name){
 
         return courseService.findByName(name);
@@ -43,7 +45,7 @@ public class CourseController {
     }
     //查询单个课程
     @GetMapping("findOne")
-    public Course findOne(@RequestBody Integer id){
+    public Course findOne(Integer id){
         System.out.println(id);
         return courseService.findOne(id);
     }
@@ -68,7 +70,7 @@ public class CourseController {
         courseService.removeOne(id);
         return "success";
     }
-    //删除课程g
+    //根据用户查询课程
     @RequestMapping("findByUserId")
     public List<Course> findByUserId(HttpServletRequest  request){
         User user= (User) request.getSession().getAttribute("user");
